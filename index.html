@@ -1,1 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Sai Food Store</title>
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    color: #222;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    background: #ff5200;
+    color: white;
+    padding: 16px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.cart {
+    background: white;
+    color: #ff5200;
+    padding: 9px 15px;
+    border-radius: 25px;
+    font-weight: bold;
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 15px 60px;
+}
+
+
+/* =========================
+   CUSTOMER
+========================= */
+
+.customer-box {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+}
+
+.customer-box h2 {
+    margin-bottom: 15px;
+}
+
+.customer-box input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+}
+
+.customer-box input:focus {
+    border-color: #ff5200;
+}
+
+
+/* =========================
+   PRODUCTS
+========================= */
+
+.section-title {
+    margin-bottom: 18px;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.product {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+}
+
+.product img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 15px;
+}
+
+.product-info h3 {
+    margin-bottom: 8px;
+}
+
+.price {
+    color: #ff5200;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+
+/* =========================
+   QUANTITY
+========================= */
+
+.quantity {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.quantity button {
+    width: 38px;
+    height: 35px;
+    border: none;
+    border-radius: 7px;
+    background: #ff5200;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.quantity button:hover {
+    background: #e64900;
+}
+
+.quantity span {
+    min-width: 25px;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+/* =========================
+   BILL
+========================= */
+
+.bill-section {
+    background: white;
+    margin-top: 30px;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+}
+
+.bill-section h2 {
+    margin-bottom: 20px;
+}
+
+.bill-row {
+    display: grid;
+    grid-template-columns: 1fr 80px 100px 110px;
+    gap: 10px;
+    padding: 13px 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.bill-header {
+    background: #f7f7f7;
+    font-weight: bold;
+}
+
+.empty {
+    text-align: center;
+    padding: 20px;
+    color: #888;
+}
+
+
+/* =========================
+   TOTAL
+========================= */
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.total strong {
+    color: #ff5200;
+}
+
+
+/* =========================
+   PRINT BUTTON
+========================= */
+
+.print-btn {
+    width: 100%;
+    border: none;
+    padding: 16px;
+    border-radius: 9px;
+    background: #ff5200;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.print-btn:hover {
+    background: #e64900;
+}
+
+.print-btn:disabled {
+    background: #999;
+    cursor: not-allowed;
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+#message {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #222;
+    color: white;
+    padding: 14px 20px;
+    border-radius: 8px;
+    display: none;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px) {
+
+    .products {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .product img {
+        height: 150px;
+    }
+
+    .bill-row {
+        grid-template-columns: 1fr 50px 70px 80px;
+        font-size: 13px;
+    }
+}
+
+
+@media(max-width:450px) {
+
+    .products {
+        grid-template-columns: 1fr;
+    }
+
+    .product img {
+        height: 200px;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    .bill-row {
+        grid-template-columns: 1fr 40px 60px 70px;
+        font-size: 12px;
+    }
+}
+
+
+/* =========================
+   PRINT
+========================= */
+
+@media print {
+
+    body {
+        background: white;
+    }
+
+    header,
+    .customer-box,
+    .products,
+    .section-title,
+    .print-btn,
+    #message {
+        display: none !important;
+    }
+
+    .container {
+        padding: 0;
+        width: 100%;
+    }
+
+    .bill-section {
+        box-shadow: none;
+        margin: 0;
+        padding: 10px;
+    }
+
+    .bill-section h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .bill-row {
+        grid-template-columns: 1fr 80px 100px 110px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <div class="logo">
+        🍔 Sai Food
+    </div>
+
+    <div class="cart">
+        🛒 Cart: <span id="cartCount">0</span>
+    </div>
+
+</header>
+
+
+
+<div class="container">
+
+
+<!-- =========================
+     CUSTOMER
+========================= -->
+
+<section class="customer-box">
+
+    <h2>Customer Details</h2>
+
+    <input
+        type="text"
+        id="customerName"
+        placeholder="Enter customer name"
+        autocomplete="off"
+    >
+
+</section>
+
+
+
+<!-- =========================
+     FOOD MENU
+========================= -->
+
+<section>
+
+    <h2 class="section-title">
+        🍴 Food Menu
+    </h2>
+
+
+    <div class="products">
+
+
+        <!-- PIZZA -->
+
+        <div class="product">
+
+            <img
+                src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80"
+            >
+
+            <div class="product-info">
+
+                <h3>Pizza</h3>
+
+                <div class="price">
+                    ₹199
+                </div>
+
+                <div class="quantity">
+
+                    <button onclick="changeQty('Pizza',-1)">
+                        −
+                    </button>
+
+                    <span id="qty-Pizza">
+                        0
+                    </span>
+
+                    <button onclick="changeQty('Pizza',1)">
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- BURGER -->
+
+        <div class="product">
+
+            <img
+                src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80"
+            >
+
+            <div class="product-info">
+
+                <h3>Burger</h3>
+
+                <div class="price">
+                    ₹149
+                </div>
+
+                <div class="quantity">
+
+                    <button onclick="changeQty('Burger',-1)">
+                        −
+                    </button>
+
+                    <span id="qty-Burger">
+                        0
+                    </span>
+
+                    <button onclick="changeQty('Burger',1)">
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- FRIES -->
+
+        <div class="product">
+
+            <img
+                src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80"
+            >
+
+            <div class="product-info">
+
+                <h3>French Fries</h3>
+
+                <div class="price">
+                    ₹99
+                </div>
+
+                <div class="quantity">
+
+                    <button onclick="changeQty('French Fries',-1)">
+                        −
+                    </button>
+
+                    <span id="qty-French-Fries">
+                        0
+                    </span>
+
+                    <button onclick="changeQty('French Fries',1)">
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- BIRYANI -->
+
+        <div class="product">
+
+            <img
+                src="https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=600&q=80"
+            >
+
+            <div class="product-info">
+
+                <h3>Chicken Biryani</h3>
+
+                <div class="price">
+                    ₹249
+                </div>
+
+                <div class="quantity">
+
+                    <button onclick="changeQty('Chicken Biryani',-1)">
+                        −
+                    </button>
+
+                    <span id="qty-Chicken-Biryani">
+                        0
+                    </span>
+
+                    <button onclick="changeQty('Chicken Biryani',1)">
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- PANEER -->
+
+        <div class="product">
+
+            <img
+                src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80"
+            >
+
+            <div class="product-info">
+
+                <h3>Paneer Roll</h3>
+
+                <div class="price">
+                    ₹129
+                </div>
+
+                <div class="quantity">
+
+                    <button onclick="changeQty('Paneer Roll',-1)">
+                        −
+                    </button>
+
+                    <span id="qty-Paneer-Roll">
+                        0
+                    </span>
+
+                    <button onclick="changeQty('Paneer Roll',1)">
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     BILL
+========================= -->
+
+<section class="bill-section">
+
+    <h2>
+        🧾 Bill
+    </h2>
+
+
+    <div id="billItems">
+
+        <p class="empty">
+            No products selected
+        </p>
+
+    </div>
+
+
+    <div class="total">
+
+        <span>
+            Total Bill
+        </span>
+
+        <strong>
+            ₹<span id="totalAmount">0</span>
+        </strong>
+
+    </div>
+
+
+    <button
+        class="print-btn"
+        id="printButton"
+        onclick="printBill()"
+    >
+        🖨️ PRINT BILL
+    </button>
+
+
+</section>
+
+
+</div>
+
+
+
+<!-- MESSAGE -->
+
+<div id="message"></div>
+
+
+
+<script>
+
+/* ==================================================
+   GOOGLE APPS SCRIPT URL
+================================================== */
+
+const GOOGLE_SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbygNeDbR0tv_JZGgZHYJ-rzVPmmU3zrGI3RrSWYuK2ZWFGw8jzsTCzmHR0b1lsBYhk/exec";
+
+
+
+/* ==================================================
+   PRODUCTS
+================================================== */
+
+const products = {
+
+    "Pizza": 199,
+
+    "Burger": 149,
+
+    "French Fries": 99,
+
+    "Chicken Biryani": 249,
+
+    "Paneer Roll": 129
+
+};
+
+
+
+/* ==================================================
+   CART
+================================================== */
+
+let cart = {};
+
+
+
+/* ==================================================
+   CHANGE QUANTITY
+================================================== */
+
+function changeQty(product, change) {
+
+    if (!cart[product]) {
+        cart[product] = 0;
+    }
+
+    cart[product] += change;
+
+
+    if (cart[product] < 0) {
+        cart[product] = 0;
+    }
+
+
+    updateQuantity(product);
+
+    updateBill();
+
+}
+
+
+
+/* ==================================================
+   UPDATE QUANTITY DISPLAY
+================================================== */
+
+function updateQuantity(product) {
+
+    const id =
+        "qty-" + product.replaceAll(" ", "-");
+
+    const element =
+        document.getElementById(id);
+
+    if (element) {
+
+        element.innerText =
+            cart[product] || 0;
+
+    }
+
+}
+
+
+
+/* ==================================================
+   UPDATE BILL
+================================================== */
+
+function updateBill() {
+
+    const bill =
+        document.getElementById("billItems");
+
+    const cartCount =
+        document.getElementById("cartCount");
+
+    const totalElement =
+        document.getElementById("totalAmount");
+
+
+    let total = 0;
+
+    let quantityTotal = 0;
+
+    let hasProducts = false;
+
+
+    let html = `
+
+        <div class="bill-row bill-header">
+
+            <span>Product</span>
+
+            <span>Qty</span>
+
+            <span>Rate</span>
+
+            <span>Amount</span>
+
+        </div>
+
+    `;
+
+
+    for (const product in cart) {
+
+        const quantity =
+            cart[product];
+
+
+        if (quantity > 0) {
+
+            hasProducts = true;
+
+
+            const rate =
+                products[product];
+
+
+            const amount =
+                quantity * rate;
+
+
+            total += amount;
+
+            quantityTotal += quantity;
+
+
+            html += `
+
+                <div class="bill-row">
+
+                    <span>${product}</span>
+
+                    <span>${quantity}</span>
+
+                    <span>₹${rate}</span>
+
+                    <span>₹${amount}</span>
+
+                </div>
+
+            `;
+
+        }
+
+    }
+
+
+    if (!hasProducts) {
+
+        bill.innerHTML = `
+
+            <p class="empty">
+                No products selected
+            </p>
+
+        `;
+
+    } else {
+
+        bill.innerHTML = html;
+
+    }
+
+
+    cartCount.innerText =
+        quantityTotal;
+
+
+    totalElement.innerText =
+        total;
+
+}
+
+
+
+/* ==================================================
+   MESSAGE
+================================================== */
+
+function showMessage(text) {
+
+    const message =
+        document.getElementById("message");
+
+
+    message.innerText = text;
+
+    message.style.display = "block";
+
+
+    setTimeout(function() {
+
+        message.style.display = "none";
+
+    }, 3000);
+
+}
+
+
+
+/* ==================================================
+   PRINT BILL + SAVE TO GOOGLE SHEETS
+================================================== */
+
+async function printBill() {
+
+
+    /* CUSTOMER NAME */
+
+    const customerName =
+        document
+        .getElementById("customerName")
+        .value
+        .trim();
+
+
+    if (!customerName) {
+
+        alert(
+            "Please enter customer name."
+        );
+
+        document
+        .getElementById("customerName")
+        .focus();
+
+        return;
+
+    }
+
+
+
+    /* PRODUCTS */
+
+    const orderProducts = [];
+
+    let total = 0;
+
+
+    for (const product in cart) {
+
+        const quantity =
+            cart[product];
+
+
+        if (quantity > 0) {
+
+            const rate =
+                products[product];
+
+
+            const amount =
+                quantity * rate;
+
+
+            total += amount;
+
+
+            orderProducts.push({
+
+                name: product,
+
+                quantity: quantity,
+
+                rate: rate,
+
+                amount: amount
+
+            });
+
+        }
+
+    }
+
+
+
+    if (orderProducts.length === 0) {
+
+        alert(
+            "Please add at least one product."
+        );
+
+        return;
+
+    }
+
+
+
+    /* BUTTON */
+
+    const button =
+        document.getElementById("printButton");
+
+
+    button.disabled = true;
+
+    button.innerText =
+        "⏳ Saving Bill...";
+
+
+
+    /* ORDER DATA */
+
+    const order = {
+
+        customerName: customerName,
+
+        products: orderProducts,
+
+        total: total,
+
+        date: new Date().toISOString()
+
+    };
+
+
+
+    /* SEND TO GOOGLE SHEETS */
+
+    try {
+
+
+        const response =
+            await fetch(
+                GOOGLE_SCRIPT_URL,
+                {
+
+                    method: "POST",
+
+                    body:
+                        JSON.stringify(order)
+
+                }
+            );
+
+
+        const result =
+            await response.text();
+
+
+        console.log(
+            "Google Sheets Response:",
+            result
+        );
+
+
+
+        /* SUCCESS */
+
+        if (
+            result.includes("SUCCESS")
+        ) {
+
+
+            showMessage(
+                "✅ Bill saved successfully!"
+            );
+
+
+            button.innerText =
+                "🖨️ Printing...";
+
+
+            setTimeout(function() {
+
+                window.print();
+
+
+                button.disabled =
+                    false;
+
+
+                button.innerText =
+                    "🖨️ PRINT BILL";
+
+
+            }, 700);
+
+
+        }
+
+        else {
+
+            throw new Error(
+                "Save failed"
+            );
+
+        }
+
+
+    }
+
+
+    catch(error) {
+
+
+        console.error(error);
+
+
+        alert(
+            "Unable to save bill.\n\n" +
+            "Please check Google Apps Script."
+        );
+
+
+        button.disabled =
+            false;
+
+
+        button.innerText =
+            "🖨️ PRINT BILL";
+
+    }
+
+}
+
+
+
+/* ==================================================
+   START
+================================================== */
+
+updateBill();
+
+</script>
+
+</body>
+</html>
